@@ -5,7 +5,6 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
 
 public class ItemSelect : MonoBehaviour
 {
@@ -36,7 +35,7 @@ public class ItemSelect : MonoBehaviour
 
     [SerializeField] SizeSelector sizeSelector;
     [SerializeField] ShoppingCart cart;
-    [SerializeField] OrderSummary summary;
+    [SerializeField] public OrderSummary summary;
 
     [SerializeField] CanvasGroup error;
 
@@ -81,7 +80,7 @@ public class ItemSelect : MonoBehaviour
 
                             infoPanel.gameObject.SetActive(true);
                             infoPanel.DOFade(1f, 0.2f);
-
+                            cart.clearMsg();
                             sizeSelector.spawnButtons(itemPrefab);
 
                             ItemDetails details = item.GetComponent<ItemDetails>();
@@ -109,12 +108,13 @@ public class ItemSelect : MonoBehaviour
                             Cursor.lockState = CursorLockMode.None;
                             cartPanel.gameObject.SetActive(true);
                             cartPanel.DOFade(1f, 0.2f);
-                            float totalPrice = 0;
+                            //float totalPrice = 0;
                             for (int i = 0; i < cart.cartItems.Count; i++)
                             {
                                 summary.spawnListings(cart.cartItems[i]);
-                                totalPrice += cart.cartItems[i].GetComponent<ItemDetails>().quantity * cart.cartItems[i].GetComponent<ItemDetails>().chosenPrice;
-                                totalPriceText.text = "$" + totalPrice.ToString("F2");
+                                //totalPrice += cart.cartItems[i].GetComponent<ItemDetails>().quantity * cart.cartItems[i].GetComponent<ItemDetails>().chosenPrice;
+                                //totalPriceText.text = "$" + totalPrice.ToString("F2");
+                                refreshPrice();
                             }
                         }
                     }
@@ -190,7 +190,7 @@ public class ItemSelect : MonoBehaviour
             }
 
             sizeSelector.buttons.Clear();
-
+            error.DOFade(0f, 0.2f);
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
@@ -201,9 +201,20 @@ public class ItemSelect : MonoBehaviour
         {
             if (itemPrefab.GetComponent<ItemDetails>().chosenSize != "")
             {
+                foreach (GameObject itemObj in cart.cartItems)
+                {
+                    ItemDetails existingDetails = itemObj.GetComponent<ItemDetails>();
+                    ItemDetails newDetails = itemPrefab.GetComponent<ItemDetails>();
+                    if (existingDetails.name == newDetails.name && existingDetails.chosenSize == newDetails.chosenSize)
+                    {
+                        existingDetails.quantity += newDetails.quantity;
+                        cart.addedToCartMsg();
+                        exit();
+                        return;
+                    }
+                }
                 cart.cartItems.Add(Instantiate(itemPrefab, new Vector3(200, 200, 200), Quaternion.identity));
                 cart.addedToCartMsg();
-                error.DOFade(0f, 0.2f);
                 exit();
             }
             else
@@ -219,5 +230,16 @@ public class ItemSelect : MonoBehaviour
         cartPanel.DOFade(0f, 0.2f)
             .OnComplete(() => cartPanel.gameObject.SetActive(false));
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void refreshPrice()
+    {
+        float total = 0f;
+        foreach(GameObject itemObj in cart.cartItems)
+        {
+            ItemDetails d = itemObj.GetComponent<ItemDetails>();
+            total += d.chosenPrice * d.quantity;
+            totalPriceText.text = "$" + total.ToString("F2");
+        }
     }
 }

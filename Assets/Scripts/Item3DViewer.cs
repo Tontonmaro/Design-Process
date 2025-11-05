@@ -119,6 +119,7 @@ public class Item3DViewer : MonoBehaviour, IDragHandler
             this.gameObject.transform.GetChild(0).DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.2f);
             zoomBtn.transform.DOLocalMove(new Vector3(-1283f, 443.76f, 0f), 0.2f);
             zoomBtn.GetComponent<Image>().sprite = zoomOutIcon;
+            zoomBG.gameObject.SetActive(true);
             zoomBG.DOFade(0.85f, 0.2f);
             zoomed = true;
         }
@@ -128,6 +129,7 @@ public class Item3DViewer : MonoBehaviour, IDragHandler
             this.gameObject.transform.GetChild(0).DOScale(initialScale, 0.2f);
             zoomBtn.transform.DOLocalMove(initialBtnPos, 0.2f);
             zoomBtn.GetComponent<Image>().sprite = zoomIcon;
+            zoomBG.gameObject.SetActive(false);
             zoomBG.DOFade(0f, 0.2f);
             zoomed = false;
         }

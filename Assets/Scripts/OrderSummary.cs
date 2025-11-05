@@ -19,6 +19,8 @@ public class OrderSummary : MonoBehaviour
     {
         details = prefab.GetComponent<ItemDetails>();
         GameObject newListing = Instantiate(listingPrefab, listingParent.transform);
+        CartItemUI cartUI = newListing.GetComponent<CartItemUI>();
+        cartUI.Setup(details, select);
         listings.Add(newListing);
         newListing.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = details.name;
         newListing.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = details.subtitle;

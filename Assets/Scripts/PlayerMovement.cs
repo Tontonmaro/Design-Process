@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!itemSelect.isLooking && !tutorial.inTutorial)
+        if (!itemSelect.isLooking && !tutorial.inTutorial && !itemSelect.summary.spawned)
         {
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");

@@ -16,6 +16,12 @@ public class ShoppingCart : MonoBehaviour
         msg.DOFade(0f, 0.2f);
     }
 
+    public void clearMsg()
+    {
+        StopAllCoroutines();
+        msg.alpha = 0f;
+    }
+
     public void addedToCartMsg()
     {
         StartCoroutine(fadeMsg());
