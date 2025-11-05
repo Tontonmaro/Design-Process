@@ -12,13 +12,14 @@ public class PlayerMovement : MonoBehaviour
     private float xRotation = 0f;
 
     ItemSelect itemSelect;
-    [SerializeField] Tutorial tutorial;
 
     // Start is called before the first frame update
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         itemSelect = Camera.main.GetComponent<ItemSelect>();
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -31,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
             v
     }
     {
-        if (!itemSelect.isLooking && !tutorial.inTutorial)
+        if (itemSelect.isLooking != true)
         {
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");

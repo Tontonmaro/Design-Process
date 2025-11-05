@@ -36,7 +36,7 @@ public class ChangeQuantity : MonoBehaviour
 
     public void decreaseQuantity()
     {
-        if (itemDetails != null && itemDetails.quantity > 1)
+        if (itemDetails != null && itemDetails.quantity > 0)
         {
             itemDetails.quantity--;
         }
