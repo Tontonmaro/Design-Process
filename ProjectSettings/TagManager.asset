@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Checkout
+  - Cart
   layers:
   - Default
   - TransparentFX

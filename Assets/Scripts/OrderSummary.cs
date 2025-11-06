@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +17,10 @@ public class OrderSummary : MonoBehaviour
     public bool spawned = false;
     public void spawnListings(GameObject prefab)
     {
-        details = prefab.GetComponent<ItemDetails>();
+        if (prefab != null)
+        {
+            details = prefab.GetComponent<ItemDetails>();
+        }
         GameObject newListing = Instantiate(listingPrefab, listingParent.transform);
         CartItemUI cartUI = newListing.GetComponent<CartItemUI>();
         cartUI.Setup(details, select);

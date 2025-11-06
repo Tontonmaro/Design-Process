@@ -237,9 +237,12 @@ public class ItemSelect : MonoBehaviour
         float total = 0f;
         foreach(GameObject itemObj in cart.cartItems)
         {
-            ItemDetails d = itemObj.GetComponent<ItemDetails>();
-            total += d.chosenPrice * d.quantity;
-            totalPriceText.text = "$" + total.ToString("F2");
+            if (itemObj != null)
+            {
+                ItemDetails d = itemObj.GetComponent<ItemDetails>();
+                total += d.chosenPrice * d.quantity;
+            }
         }
+        totalPriceText.text = "$" + total.ToString("F2");   
     }
 }

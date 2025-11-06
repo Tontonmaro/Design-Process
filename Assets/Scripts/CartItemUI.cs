@@ -9,18 +9,24 @@ public class CartItemUI : MonoBehaviour
     public TextMeshProUGUI quantityText;
     public Button increaseButton;
     public Button decreaseButton;
+    public Button deleteButton;
 
     private ItemDetails linkedItem;
     private ItemSelect itemSelect;
+    private ShoppingCart cart;
 
     public void Setup(ItemDetails item, ItemSelect select)
     {
         linkedItem = item;
         itemSelect = select;
+
+        cart = GameObject.FindWithTag("Cart").GetComponent<ShoppingCart>();
+
         UpdateUI();
         
         increaseButton.onClick.AddListener(IncreaseQuantity);
         decreaseButton.onClick.AddListener(DecreaseQuantity);
+        deleteButton.onClick.AddListener(DeleteItem);
     }
 
     void IncreaseQuantity()
@@ -34,6 +40,18 @@ public class CartItemUI : MonoBehaviour
     {
         linkedItem.quantity = Mathf.Max(1, linkedItem.quantity - 1);
         UpdateUI();
+    }
+
+    void DeleteItem()
+    {
+        if (cart.cartItems.Contains(linkedItem.gameObject))
+        {
+            cart.cartItems.Remove(linkedItem.gameObject);
+        }
+
+        Destroy(linkedItem.gameObject);
+        Destroy(gameObject);
+        itemSelect.refreshPrice();
     }
 
     void UpdateUI()
