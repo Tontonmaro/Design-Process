@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Checkout : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Checkout : MonoBehaviour
     public List<GameObject> listings = new List<GameObject>();
 
     ItemDetails details;
+
+    [SerializeField] CanvasGroup paymentPanel;
     public void spawnListings(GameObject prefab)
     {
         if (prefab != null)
@@ -35,5 +38,13 @@ public class Checkout : MonoBehaviour
         {
             Destroy(listings[i]);
         }
+    }
+
+    public void proceedToPayment()
+    {
+        paymentPanel.gameObject.SetActive(true);
+        paymentPanel.DOFade(1f, 0.2f)
+            .OnComplete(() => this.gameObject.GetComponent<CanvasGroup>().alpha = 0f)
+            .OnComplete(() => this.gameObject.SetActive(false));
     }
 }
