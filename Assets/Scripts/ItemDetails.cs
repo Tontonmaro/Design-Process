@@ -14,4 +14,5 @@ public class ItemDetails : MonoBehaviour
     public float[] priceOptions;
     public string chosenSize;
     public Sprite thumbnail;
+    public BlindBoxData blindBoxData;
 }

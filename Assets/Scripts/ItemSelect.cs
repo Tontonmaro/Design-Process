@@ -24,6 +24,7 @@ public class ItemSelect : MonoBehaviour
     IEnumerator cameraMovement;
 
     public CanvasGroup infoPanel;
+    public CanvasGroup rewardsPanel;
     public GameObject title;
     public GameObject subtitle;
     public GameObject price;
@@ -37,6 +38,7 @@ public class ItemSelect : MonoBehaviour
     [SerializeField] ShoppingCart cart;
     [SerializeField] BuyNowCart buyNowCart;
     [SerializeField] public OrderSummary summary;
+    [SerializeField] BlindBoxManager blindBoxManager;
 
     [SerializeField] CanvasGroup error;
 
@@ -243,6 +245,21 @@ public class ItemSelect : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public void returnToExhibition()
+    {
+        summary.destroyListings();
+        blindBoxManager.clearRewards();
+        emptyError.alpha = 0;
+        rewardsPanel.DOFade(0f, 0.2f)
+            .OnComplete(() => rewardsPanel.gameObject.SetActive(false));
+        cart.cartItems.Clear();
+        buyNowCart.buyNowItems.Clear();
+        boughtNow = false;
+        isLooking = false;
+        summary.spawned = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void buyNow()
     {
         boughtNow = true;
@@ -308,5 +325,61 @@ public class ItemSelect : MonoBehaviour
             }
         }
         text.text = "$" + total.ToString("F2");   
+    }
+
+    public void refreshPriceShipping(TextMeshProUGUI text)
+    {
+        float total = 0f;
+        if (!boughtNow)
+        {
+            foreach (GameObject itemObj in cart.cartItems)
+            {
+                if (itemObj != null)
+                {
+                    ItemDetails d = itemObj.GetComponent<ItemDetails>();
+                    total += 2.95f * d.quantity;
+                }
+            }
+        }
+        else
+        {
+            foreach (GameObject itemObj in buyNowCart.buyNowItems)
+            {
+                if (itemObj != null)
+                {
+                    ItemDetails d = itemObj.GetComponent<ItemDetails>();
+                    total += 2.95f * d.quantity;
+                }
+            }
+        }
+        text.text = "$" + total.ToString("F2");
+    }
+
+    public void refreshTotalPrice(TextMeshProUGUI text)
+    {
+        float total = 0f;
+        if (!boughtNow)
+        {
+            foreach (GameObject itemObj in cart.cartItems)
+            {
+                if (itemObj != null)
+                {
+                    ItemDetails d = itemObj.GetComponent<ItemDetails>();
+                    total += ((d.chosenPrice * d.quantity) + (2.95f * d.quantity));
+                }
+            }
+        }
+        else
+        {
+            foreach (GameObject itemObj in buyNowCart.buyNowItems)
+            {
+                if (itemObj != null)
+                {
+                    ItemDetails d = itemObj.GetComponent<ItemDetails>();
+                    total += ((d.chosenPrice * d.quantity) + (2.95f * d.quantity));
+                }
+            }
+        }
+        text.text = "$" + total.ToString("F2");
     }
 }

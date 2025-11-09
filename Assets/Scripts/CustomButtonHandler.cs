@@ -39,6 +39,12 @@ public class CustomButtonHandler : MonoBehaviour, IPointerDownHandler
                 {
                     select.exitCart();
                 }
+                else if (button.GetComponentInChildren<TextMeshProUGUI>().text == "Return to exhibition")
+                {
+                    select.returnToExhibition();
+                    button.interactable = false;
+                    StartCoroutine(enableButtonAfterDelay(button));
+                }
                 else if (button.GetComponentInChildren<TextMeshProUGUI>().text == "Buy Now")
                 {
                     select.buyNow();

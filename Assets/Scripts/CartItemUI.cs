@@ -14,6 +14,7 @@ public class CartItemUI : MonoBehaviour
     private ItemDetails linkedItem;
     private ItemSelect itemSelect;
     private ShoppingCart cart;
+    private BuyNowCart buyNowCart;
 
     public void Setup(ItemDetails item, ItemSelect select)
     {
@@ -21,6 +22,7 @@ public class CartItemUI : MonoBehaviour
         itemSelect = select;
 
         cart = GameObject.FindWithTag("Cart").GetComponent<ShoppingCart>();
+        buyNowCart = GameObject.FindWithTag("BuyNowCart").GetComponent<BuyNowCart>();
 
         UpdateUI();
         
@@ -47,6 +49,10 @@ public class CartItemUI : MonoBehaviour
         if (cart.cartItems.Contains(linkedItem.gameObject))
         {
             cart.cartItems.Remove(linkedItem.gameObject);
+        }
+        if(buyNowCart.buyNowItems.Contains(linkedItem.gameObject))
+        {
+            buyNowCart.buyNowItems.Remove(linkedItem.gameObject);
         }
 
         Destroy(linkedItem.gameObject);

@@ -24,6 +24,7 @@ public class OrderSummary : MonoBehaviour
     [SerializeField] TextMeshProUGUI subtotalPriceText;
     [SerializeField] TextMeshProUGUI subtotalQtyText;
     [SerializeField] TextMeshProUGUI totalPriceText;
+    [SerializeField] TextMeshProUGUI shippingPriceText;
 
     public bool spawned = false;
     public void spawnListings(GameObject prefab)
@@ -71,7 +72,8 @@ public class OrderSummary : MonoBehaviour
                     totalQty += cart.cartItems[i].GetComponent<ItemDetails>().quantity;
                 }
                 select.refreshPrice(subtotalPriceText);
-                select.refreshPrice(totalPriceText);
+                select.refreshTotalPrice(totalPriceText);
+                select.refreshPriceShipping(shippingPriceText);
                 subtotalQtyText.text = "Subtotal (" + totalQty + " items):";
             }
             else
@@ -81,19 +83,27 @@ public class OrderSummary : MonoBehaviour
         }
         else
         {
-            error.alpha = 0;
-            checkoutPanel.gameObject.SetActive(true);
-            checkoutPanel.DOFade(1f, 0.2f)
-                .OnComplete(() => this.gameObject.GetComponent<CanvasGroup>().alpha = 0f)
-                .OnComplete(() => this.gameObject.SetActive(false));
-            for (int i = 0; i < buyNowCart.buyNowItems.Count; i++)
+            if (buyNowCart.buyNowItems.Count > 0)
             {
-                checkout.spawnListings(buyNowCart.buyNowItems[i]);
-                totalQty += buyNowCart.buyNowItems[i].GetComponent<ItemDetails>().quantity;
+                error.alpha = 0;
+                checkoutPanel.gameObject.SetActive(true);
+                checkoutPanel.DOFade(1f, 0.2f)
+                    .OnComplete(() => this.gameObject.GetComponent<CanvasGroup>().alpha = 0f)
+                    .OnComplete(() => this.gameObject.SetActive(false));
+                for (int i = 0; i < buyNowCart.buyNowItems.Count; i++)
+                {
+                    checkout.spawnListings(buyNowCart.buyNowItems[i]);
+                    totalQty += buyNowCart.buyNowItems[i].GetComponent<ItemDetails>().quantity;
+                }
+                select.refreshPrice(subtotalPriceText);
+                select.refreshTotalPrice(totalPriceText);
+                select.refreshPriceShipping(shippingPriceText);
+                subtotalQtyText.text = "Subtotal (" + totalQty + " items):";
             }
-            select.refreshPrice(subtotalPriceText);
-            select.refreshPrice(totalPriceText);
-            subtotalQtyText.text = "Subtotal (" + totalQty + " items):";
+            else
+            {
+                error.DOFade(1f, 0.2f);
+            }
         }
     }
 

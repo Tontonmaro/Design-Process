@@ -11,12 +11,15 @@ public class Checkout : MonoBehaviour
     public GameObject listingPrefab;
     public GameObject listingParent;
 
+    public GameObject errorMsg;
+
     public List<GameObject> listings = new List<GameObject>();
 
     ItemDetails details;
 
     [SerializeField] CanvasGroup paymentPanel;
     [SerializeField] PaymentDetailsHandler paymentDetails;
+    [SerializeField] CountryDropdown countryDropdown;
     [SerializeField] TextMeshProUGUI[] errors;
     public void spawnListings(GameObject prefab)
     {
@@ -52,7 +55,7 @@ public class Checkout : MonoBehaviour
             error(errors[0]);
             hasError = true;
         }
-        if (string.IsNullOrEmpty(paymentDetails.country.text))
+        if (paymentDetails.country.options[paymentDetails.country.value].text == "<i><color=#00000080>Country/Region</color></i>")
         {
             error(errors[1]);
             hasError = true;
@@ -89,9 +92,12 @@ public class Checkout : MonoBehaviour
         }
         if (hasError)
         {
+            StartCoroutine(mainError(errorMsg));
             return;
         }
         clearErrors();
+        destroyListings();
+        countryDropdown.SetupDropDown();
         paymentDetails.resetInputFields();
         paymentPanel.gameObject.SetActive(true);
         paymentPanel.DOFade(1f, 0.2f)
@@ -114,5 +120,14 @@ public class Checkout : MonoBehaviour
         {
             errors[i].alpha = 0f;
         }
+    }
+
+    IEnumerator mainError(GameObject errorMsg)
+    {
+        errorMsg.SetActive(true);
+        errorMsg.GetComponent<CanvasGroup>().DOFade(1f, 0.2f);
+        yield return new WaitForSeconds(1f);
+        errorMsg.GetComponent<CanvasGroup>().DOFade(0f, 1f)
+            .OnComplete(() =>errorMsg.gameObject.SetActive(false));
     }
 }
