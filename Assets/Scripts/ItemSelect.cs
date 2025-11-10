@@ -37,8 +37,10 @@ public class ItemSelect : MonoBehaviour
     [SerializeField] SizeSelector sizeSelector;
     [SerializeField] ShoppingCart cart;
     [SerializeField] BuyNowCart buyNowCart;
+    [SerializeField] Tutorial tut;
     [SerializeField] public OrderSummary summary;
     [SerializeField] BlindBoxManager blindBoxManager;
+    [SerializeField] SFXPlayer sfxPlayer;
 
     [SerializeField] CanvasGroup error;
 
@@ -46,6 +48,7 @@ public class ItemSelect : MonoBehaviour
     public TextMeshProUGUI emptyError;
 
     public bool boughtNow = false;
+    public bool inMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -54,11 +57,20 @@ public class ItemSelect : MonoBehaviour
         cam = Camera.main;
 
         infoPanel.gameObject.SetActive(false);
+        inMenu = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C) && !inMenu)
+        {
+            enterCart();
+        }
+        if(Input.GetKeyDown(KeyCode.T) && !inMenu)
+        {
+            tut.openTut();
+        }
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
 
@@ -78,7 +90,7 @@ public class ItemSelect : MonoBehaviour
                             Cursor.lockState = CursorLockMode.Locked;
                             Cursor.lockState = CursorLockMode.None;
                             isLooking = true;
-
+                            inMenu = true;
                             itemPrefab = Instantiate(item, new Vector3 (100, 100, 103), Quaternion.identity);
 
                             infoPanel.gameObject.SetActive(true);
@@ -183,6 +195,7 @@ public class ItemSelect : MonoBehaviour
             sizeSelector.buttons.Clear();
             error.DOFade(0f, 0.2f);
             Cursor.lockState = CursorLockMode.Locked;
+            inMenu = false;
         }
     }
 
@@ -231,6 +244,7 @@ public class ItemSelect : MonoBehaviour
         {
             refreshPrice(totalPriceText);
         }
+        inMenu = true;
     }
 
     public void exitCart()
@@ -243,6 +257,7 @@ public class ItemSelect : MonoBehaviour
         boughtNow = false;
         isLooking = false;
         Cursor.lockState = CursorLockMode.Locked;
+        inMenu = false;
     }
 
     public void returnToExhibition()
@@ -252,12 +267,22 @@ public class ItemSelect : MonoBehaviour
         emptyError.alpha = 0;
         rewardsPanel.DOFade(0f, 0.2f)
             .OnComplete(() => rewardsPanel.gameObject.SetActive(false));
+        foreach (GameObject itemObj in cart.cartItems)
+        {
+            Destroy(itemObj);
+        }
         cart.cartItems.Clear();
+        foreach (GameObject itemObj in buyNowCart.buyNowItems)
+        {
+            Destroy(itemObj);
+        }
         buyNowCart.buyNowItems.Clear();
         boughtNow = false;
         isLooking = false;
         summary.spawned = false;
+        sfxPlayer.sfxPlayed = false;
         Cursor.lockState = CursorLockMode.Locked;
+        inMenu = false;
     }
 
     public void buyNow()
@@ -291,6 +316,7 @@ public class ItemSelect : MonoBehaviour
                     summary.spawnListings(buyNowCart.buyNowItems[i]);
                     refreshPrice(totalPriceText);
                 }
+                inMenu = true;
             }
             else
             {

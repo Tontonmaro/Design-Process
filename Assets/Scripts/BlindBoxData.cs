@@ -13,6 +13,7 @@ public class BlindBoxData : ScriptableObject
     {
         public string rewardName;
         public Sprite rewardImage;
+        public GameObject rewardPrefab;
         [Range(0f, 1f)] public float chance;
     }
 

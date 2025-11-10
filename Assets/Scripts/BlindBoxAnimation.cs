@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
@@ -11,6 +11,7 @@ public class BlindBoxAnimation : MonoBehaviour
     //public ParticleSystem openEffect;
     public GameObject openEffect;
     public TextMeshProUGUI rewardText;
+    public Button viewRewardBtn;
 
     [Header("Settings")]
     public float shakeDuration = 0.5f;
@@ -21,13 +22,18 @@ public class BlindBoxAnimation : MonoBehaviour
     public float revealDelay = 0.05f;
     public float textRevealDelay = 0.5f;
 
+    [Header("Sound Effects")]
+    public AudioClip blindBoxRollSFX;
+    public AudioSource audioSource;
+    public SFXPlayer sfxPlayer;
+
     // Internal
     RectTransform rect;          // for UI scaling/shaking
     Transform t;
 
     void Awake()
     {
-
+        audioSource = GameObject.Find("SFXPlayer").GetComponent<AudioSource>();
         t = transform;
         rect = GetComponent<RectTransform>();
 
@@ -36,6 +42,7 @@ public class BlindBoxAnimation : MonoBehaviour
             rewardImage.gameObject.SetActive(false);
         if (rewardText != null)
             rewardText.gameObject.SetActive(false);
+        sfxPlayer = FindAnyObjectByType<SFXPlayer>();
     }
 
     // Public entrypoint
@@ -82,6 +89,7 @@ public class BlindBoxAnimation : MonoBehaviour
             if (boxImage != null) boxImage.gameObject.SetActive(false);
             if (rewardImage != null) rewardImage.gameObject.SetActive(true);
             openEffect.SetActive(true);
+            sfxPlayer.playBlindBoxRoll(audioSource, blindBoxRollSFX);
         });
 
         // Optional: add a small pop scale for reward
@@ -111,5 +119,18 @@ public class BlindBoxAnimation : MonoBehaviour
                 rewardText.DOFade(1f, 0.5f).SetEase(Ease.OutSine); // smooth fade in
             }
         });
+
+        seq.OnComplete(() =>
+        {
+            if (viewRewardBtn != null)
+            {
+                viewRewardBtn.interactable = true;
+            }
+        });
+
+        if (viewRewardBtn != null)
+        {
+            viewRewardBtn.interactable = false;
+        }
     }
 }

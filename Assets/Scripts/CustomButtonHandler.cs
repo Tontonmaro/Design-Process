@@ -30,14 +30,20 @@ public class CustomButtonHandler : MonoBehaviour, IPointerDownHandler
                 else if(button.GetComponentInChildren<TextMeshProUGUI>().text == "Close Tutorial")
                 {
                     tut.closeTut();
+                    button.interactable = false;
+                    StartCoroutine(enableButtonAfterDelay(button));
                 }
                 else if (button.GetComponentInChildren<TextMeshProUGUI>().text == "Close Info Panel")
                 {
                     select.exit();
+                    button.interactable = false;
+                    StartCoroutine(enableButtonAfterDelay(button));
                 }
                 else if (button.GetComponentInChildren<TextMeshProUGUI>().text == "Back to exhibition")
                 {
                     select.exitCart();
+                    button.interactable = false;
+                    StartCoroutine(enableButtonAfterDelay(button));
                 }
                 else if (button.GetComponentInChildren<TextMeshProUGUI>().text == "Return to exhibition")
                 {

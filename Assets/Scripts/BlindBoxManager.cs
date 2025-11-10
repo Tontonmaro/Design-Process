@@ -11,6 +11,8 @@ public class BlindBoxManager : MonoBehaviour
     public GameObject rewardUIPrefab;
     public ItemSelect select;
 
+    public RewardViewer rewardViewer;
+
     public List<GameObject> rewards = new List<GameObject>();
 
     public void openAllBoxes()
@@ -50,8 +52,8 @@ public class BlindBoxManager : MonoBehaviour
         GameObject rewardUI = Instantiate(rewardUIPrefab, resultsParent);
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)resultsParent);
         rewards.Add(rewardUI);
-        //RewardUI ui = rewardUI.GetComponent<RewardUI>();
-        //ui.setup(reward.rewardName, reward.rewardImage);
+        RewardUI ui = rewardUI.GetComponent<RewardUI>();
+        ui.setup(reward, rewardViewer);
         BlindBoxAnimation anim = rewardUI.GetComponent<BlindBoxAnimation>();
         anim.playOpenAnimation(reward.rewardImage, reward.rewardName);
     }

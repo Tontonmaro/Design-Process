@@ -1,17 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class RewardUI : MonoBehaviour
 {
-    public Image rewardImage;
+    public UnityEngine.UI.Image rewardImage;
     public TextMeshProUGUI rewardNameText;
+    public UnityEngine.UI.Button rewardButton;
 
-    public void setup(string name, Sprite image)
+    private BlindBoxData.BlindBoxReward rewardData;
+
+    [HideInInspector]public RewardViewer viewer;
+
+    public void setup(BlindBoxData.BlindBoxReward reward, RewardViewer viewerRef)
     {
-        rewardNameText.text = name;
-        rewardImage.sprite = image;
+        rewardData = reward;
+        viewer = viewerRef;
+
+        rewardButton.onClick.RemoveAllListeners();
+        rewardButton.onClick.AddListener(() =>
+        {
+            if (viewer != null)
+            {
+                viewer.ShowReward(rewardData);
+            }
+            else
+            {
+                Debug.LogError($"RewardViewer reference missing on {name}");
+            }
+        });
     }
 }
