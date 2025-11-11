@@ -179,9 +179,8 @@ public class ItemSelect : MonoBehaviour
             //StopCoroutine(cameraMovement);
             //StartCoroutine(RotateBack());
             //StartCoroutine(ReturnCamera());
-
-            infoPanel.DOFade(0f, 0.2f)
-                .OnComplete(() => infoPanel.gameObject.SetActive(false));
+            infoPanel.alpha = 0f;
+            infoPanel.gameObject.SetActive(false);
 
             Destroy(itemPrefab);
             for (int i = 0; i < sizeSelector.buttons.Count; i++)

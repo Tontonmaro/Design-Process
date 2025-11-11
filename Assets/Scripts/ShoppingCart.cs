@@ -9,13 +9,6 @@ public class ShoppingCart : MonoBehaviour
 
     [SerializeField] CanvasGroup msg;
 
-    IEnumerator fadeMsg()
-    {
-        msg.DOFade(1f, 0.2f);
-        yield return new WaitForSeconds(2f);
-        msg.DOFade(0f, 0.2f);
-    }
-
     public void clearMsg()
     {
         StopAllCoroutines();
@@ -24,6 +17,6 @@ public class ShoppingCart : MonoBehaviour
 
     public void addedToCartMsg()
     {
-        StartCoroutine(fadeMsg());
+        msg.gameObject.SetActive(true);
     }
 }
