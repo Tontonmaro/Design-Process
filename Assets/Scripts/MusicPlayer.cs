@@ -7,9 +7,10 @@ using UnityEngine;
 public class MusicPlayer : MonoBehaviour
 {
     [Header("Audio Setup")]
-    public AudioSource audioSource;
-    public AudioReverbFilter reverbFilter;
-    public List<AudioClip> playlist = new List<AudioClip>();
+    public AudioSource drySource; // normal audio
+    public AudioSource wetSource; // reverbed audio
+    public List<AudioClip> playlistDry = new List<AudioClip>();
+    public List<AudioClip> playlistWet = new List<AudioClip>();
 
     [Header("UI")]
     public CanvasGroup songInfoCanvasGroup;
@@ -18,36 +19,45 @@ public class MusicPlayer : MonoBehaviour
     [Header("Settings")]
     public float fadeTime = 1f;
     public float displayTime = 3f;
-    public bool shuffle = true; // toggle shuffle on/off
+    public bool shuffle = true;
 
     private int currentIndex = 0;
-    private List<AudioClip> shuffledList = new List<AudioClip>();
+    private List<int> shuffledIndices = new List<int>();
     private Coroutine songInfoCoroutine;
+    private Coroutine playing;
 
     public bool tutorial = false;
     public ItemSelect select;
 
-    private Coroutine playing;
-
     void Start()
     {
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
-        if (reverbFilter == null)
+        if (drySource == null || wetSource == null)
         {
-            reverbFilter = GetComponent<AudioReverbFilter>();
-        }
-
-        if (playlist.Count == 0)
-        {
-            Debug.LogWarning("MusicPlayer: Playlist is empty!");
+            Debug.LogError("MusicPlayer: Assign both dry and wet AudioSources!");
             return;
         }
 
-        // Prepare playlist order
-        shuffledList = new List<AudioClip>(playlist);
+        if (playlistDry.Count == 0 || playlistWet.Count == 0)
+        {
+            Debug.LogWarning("MusicPlayer: One or both playlists are empty!");
+            return;
+        }
+
+        // Ensure both lists have same count
+        if (playlistDry.Count != playlistWet.Count)
+        {
+            Debug.LogWarning("MusicPlayer: Dry and Wet playlists must have same number of songs!");
+        }
+
+        // Generate shuffled indices
+        shuffledIndices.Clear();
+        for (int i = 0; i < playlistDry.Count; i++)
+            shuffledIndices.Add(i);
         if (shuffle)
-            ShuffleList(shuffledList);
+            ShuffleIndices();
+
+        drySource.loop = false;
+        wetSource.loop = false;
     }
 
     void Update()
@@ -60,25 +70,26 @@ public class MusicPlayer : MonoBehaviour
                 tutorial = false;
             }
         }
+
+        // Toggle mute with M
         if (Input.GetKeyDown(KeyCode.M) && !select.inMenu)
         {
-            if (audioSource.mute == false)
-            {
-                audioSource.mute = true;
-            }
-            else
-            {
-                audioSource.mute = false;
-            }
+            drySource.mute = !drySource.mute;
+            wetSource.mute = !wetSource.mute;
         }
 
+        // Switch between reverb and dry when menu opens/closes
         if (select.inMenu)
         {
-            DOTween.To(() => reverbFilter.reverbLevel, x => reverbFilter.reverbLevel = x, 0f, 0.5f);
+            // In menu = no reverb
+            drySource.DOFade(1f, 0.5f);
+            wetSource.DOFade(0f, 0.5f);
         }
         else
         {
-            DOTween.To(() => reverbFilter.reverbLevel, x => reverbFilter.reverbLevel = x, 1172f, 0.5f);
+            // Out of menu = reverb on
+            drySource.DOFade(0f, 0.5f);
+            wetSource.DOFade(1f, 0.5f);
         }
     }
 
@@ -86,39 +97,44 @@ public class MusicPlayer : MonoBehaviour
     {
         while (true)
         {
-            // Play next song
-            AudioClip nextClip = shuffledList[currentIndex];
-            audioSource.clip = nextClip;
-            audioSource.Play();
+            int songIndex = shuffledIndices[currentIndex];
+            AudioClip dryClip = playlistDry[songIndex];
+            AudioClip wetClip = playlistWet[songIndex];
 
-            // Show now playing info
-            ShowSongInfo(nextClip.name);
+            drySource.clip = dryClip;
+            wetSource.clip = wetClip;
 
-            // Wait for current clip to finish playing
-            while (audioSource.isPlaying)
+            drySource.time = 0f;
+            wetSource.time = 0f;
+
+            drySource.Play();
+            wetSource.Play();
+
+            ShowSongInfo(dryClip.name);
+
+            // Wait for song to end
+            while (drySource.isPlaying)
                 yield return null;
 
-            // Move to next track
+            // Move to next
             currentIndex++;
-
-            // If we reached end, reshuffle and start again
-            if (currentIndex >= shuffledList.Count)
+            if (currentIndex >= playlistDry.Count)
             {
                 if (shuffle)
-                    ShuffleList(shuffledList);
+                    ShuffleIndices();
                 currentIndex = 0;
             }
         }
     }
 
-    void ShuffleList(List<AudioClip> list)
+    void ShuffleIndices()
     {
-        for (int i = 0; i < list.Count; i++)
+        for (int i = 0; i < shuffledIndices.Count; i++)
         {
-            AudioClip temp = list[i];
-            int randomIndex = Random.Range(i, list.Count);
-            list[i] = list[randomIndex];
-            list[randomIndex] = temp;
+            int temp = shuffledIndices[i];
+            int randomIndex = Random.Range(i, shuffledIndices.Count);
+            shuffledIndices[i] = shuffledIndices[randomIndex];
+            shuffledIndices[randomIndex] = temp;
         }
     }
 
@@ -127,7 +143,6 @@ public class MusicPlayer : MonoBehaviour
         if (songTitleText == null || songInfoCanvasGroup == null)
             return;
 
-        // Stop previous song info fade, without stopping PlayPlaylist
         if (songInfoCoroutine != null)
             StopCoroutine(songInfoCoroutine);
 
@@ -139,7 +154,6 @@ public class MusicPlayer : MonoBehaviour
         songTitleText.text = songName;
         songInfoCanvasGroup.alpha = 0f;
 
-        // Fade in
         float t = 0f;
         while (t < fadeTime)
         {
@@ -148,10 +162,8 @@ public class MusicPlayer : MonoBehaviour
             yield return null;
         }
 
-        // Stay visible
         yield return new WaitForSeconds(displayTime);
 
-        // Fade out
         t = 0f;
         while (t < fadeTime)
         {
