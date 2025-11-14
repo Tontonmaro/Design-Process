@@ -31386,23 +31386,15 @@ MonoBehaviour:
   drySource: {fileID: 1518555907}
   wetSource: {fileID: 1518555910}
   playlistDry:
-  - {fileID: 8300000, guid: 057fd9ca906406b44860df1d50b0cc04, type: 3}
-  - {fileID: 8300000, guid: 1c58bd1d95b364643872d1fd29825655, type: 3}
-  - {fileID: 8300000, guid: d533034f7c000d44badaf5854fb137a7, type: 3}
-  - {fileID: 8300000, guid: db7ac7740d7a1284b9e08ae9305637d0, type: 3}
-  - {fileID: 8300000, guid: bba16b4f81e5f2546994a0671ed48a14, type: 3}
-  - {fileID: 8300000, guid: 0044c36e77db1d644b25ae20b3553b7d, type: 3}
-  - {fileID: 8300000, guid: f7a87ef221d39944dbe73a586a4025a1, type: 3}
-  - {fileID: 8300000, guid: bdcf906d85d6b55488eebfee0def8339, type: 3}
+  - {fileID: 8300000, guid: ff47baa9b72a42344b224182ca92b169, type: 3}
+  - {fileID: 8300000, guid: ce2dc9f47b5f25d478bfbd6b76c286ab, type: 3}
+  - {fileID: 8300000, guid: 78227a0816e781740b094d8cfe436792, type: 3}
+  - {fileID: 8300000, guid: 0ece318fb94aca042aa95e44427bc689, type: 3}
   playlistWet:
-  - {fileID: 8300000, guid: 95f0aadec8db8f54e9ef5e14f3455847, type: 3}
-  - {fileID: 8300000, guid: f5e8dbe3cece0ce4eace79a98234b9cf, type: 3}
-  - {fileID: 8300000, guid: 72c2bd3c54491bd45b43d0faba0136b4, type: 3}
-  - {fileID: 8300000, guid: d8fa5c493d0e1914a94cbf4571397d89, type: 3}
-  - {fileID: 8300000, guid: 37ec13c1de7eae14386d11776a6ceb8b, type: 3}
-  - {fileID: 8300000, guid: 5f91a267dbcb8bd489ac79e24b11819d, type: 3}
-  - {fileID: 8300000, guid: c016803b54c683d4287c13ec7706e46a, type: 3}
-  - {fileID: 8300000, guid: ab08692ebe247f947b724caad419e96f, type: 3}
+  - {fileID: 8300000, guid: 231daf95ddd3cd64d901027ebc85e32a, type: 3}
+  - {fileID: 8300000, guid: 7317afeefc7c96340afe7677259b20df, type: 3}
+  - {fileID: 8300000, guid: a13926b83517e9f4abcbf46a108f0bf2, type: 3}
+  - {fileID: 8300000, guid: c86aa953d75ddff42bb351b0fb561a29, type: 3}
   songInfoCanvasGroup: {fileID: 1711787803}
   songTitleText: {fileID: 1091285748}
   fadeTime: 1
