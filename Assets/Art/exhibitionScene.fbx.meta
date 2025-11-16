@@ -3,7 +3,177 @@ guid: 948545ab0a6867e40ae6e2c9bf0bf243
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Announcement_Text_tex
+    second: {fileID: 2100000, guid: 33f49dd2088424049879158261b44f5d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cashierTable_MAT
+    second: {fileID: 2100000, guid: 36b51d4332b77f543971da166334dc1a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_Announcement_base
+    second: {fileID: 2100000, guid: 0b57c85bb98accf4cb9acf503f356f04, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_bigBox_MAT
+    second: {fileID: 2100000, guid: 40580db948ab0a04c983f04bd533e3ba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_bigStandee_MAT1
+    second: {fileID: 2100000, guid: 6d689e0b1a799884691de5cb9677cc0d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_billBoard_MAT
+    second: {fileID: 2100000, guid: 700d35ca7272fb5449932a2bfcd41ba5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_blindBox_MAT
+    second: {fileID: 2100000, guid: 65fc5374f812ab04bb02ace07d763102, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_carpet1_MAT
+    second: {fileID: 2100000, guid: 0e5e5df13a8e952499d0c2a4a441a321, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_carpet2_MAT
+    second: {fileID: 2100000, guid: 9b750c14a324cca47b598dc4274d18b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_carpet3_MAT
+    second: {fileID: 2100000, guid: 9fac6c18278267143a8ad1a097aec973, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_carpet4_MAT
+    second: {fileID: 2100000, guid: b805982e889b25c4ab6a1a400fb5afce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_carpet5_MAT
+    second: {fileID: 2100000, guid: 2eaeddf7f6490ea4e98ea927dec1f042, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_circularTable_MAT
+    second: {fileID: 2100000, guid: e5f8025132e843e489b9cb43eb796920, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_floor_MAT
+    second: {fileID: 2100000, guid: f7f04617006ef8541ac309a29a7b2d44, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_glow_MAT
+    second: {fileID: 2100000, guid: 6c994d1a54a141f4ba16250fb2ca86a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_glow_MAT1
+    second: {fileID: 2100000, guid: 1e5fc98c6550f1c41bbb4df28c38ec34, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_lightbulb_MAT
+    second: {fileID: 2100000, guid: 2507cf4ad1011b24095fe96426e59595, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_miniAct_MAT
+    second: {fileID: 2100000, guid: 4b58214a4a209704195550f96bdb8440, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_pin_MAT
+    second: {fileID: 2100000, guid: 7a62cfdf53c1e804096850f1571c7396, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_poster_MAT
+    second: {fileID: 2100000, guid: e628048fbc833d44c966848e249cc41a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_redSign_MAT
+    second: {fileID: 2100000, guid: dc3e8a3caa53ff24298ee6f82274b331, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_standardSurface4
+    second: {fileID: 2100000, guid: 93d0fd642421b6144a68724791128f7a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_tv_MAT
+    second: {fileID: 2100000, guid: b5694a047be6d7e47b5894fec814d9b1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: exhibitionScene_3_wall_MAT
+    second: {fileID: 2100000, guid: c5d89c83a0a352248a39316053a668f4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2
+    second: {fileID: 2100000, guid: b57291162de93b249982fa5940d80bc9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: partitionBeltPole_MAT
+    second: {fileID: 2100000, guid: 04e250465dbbb184ab860629655d8460, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: partitionBelt_MAT
+    second: {fileID: 2100000, guid: bc1a9529c982c834fa7f6ed2a9143f79, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: podiumGlass_MAT
+    second: {fileID: 2100000, guid: 04368bada6838c04796479bee4240d22, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: podiumStandee_MAT
+    second: {fileID: 2100000, guid: e6917cbcb45173a4a9f7a17f56794b5b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shelfGlass_MAT
+    second: {fileID: 2100000, guid: f7df18a8e587ab041bf6c2d9485c5c1a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shelfWhite_MAT
+    second: {fileID: 2100000, guid: a137d50a64d6f8942a564a62714d985c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wheelPin_MAT
+    second: {fileID: 2100000, guid: 576acbf20de3adc429e7a381cec3d2f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wheelStand_MAT
+    second: {fileID: 2100000, guid: 5fe2746b09415a54dbde3d2ae9b1fa2f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wheel_MAT1
+    second: {fileID: 2100000, guid: 16fc73e9a2ac61e45bf71fc6cfcd4856, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

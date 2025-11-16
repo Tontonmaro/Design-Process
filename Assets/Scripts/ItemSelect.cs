@@ -50,6 +50,8 @@ public class ItemSelect : MonoBehaviour
     public bool boughtNow = false;
     public bool inMenu;
 
+    public Outline currentOutline;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,16 +84,21 @@ public class ItemSelect : MonoBehaviour
                 {
                     objTransform = hitInfo.collider.transform;
                     GameObject item = hitInfo.collider.gameObject;
+                    if (currentOutline != null)
+                    {
+                        currentOutline.enabled = false;
+                    }
                     if (hitInfo.distance <= 5f)
                     {
                         item.GetComponent<Outline>().enabled = true;
+                        currentOutline = item.GetComponent<Outline>();
                         if (Input.GetMouseButtonDown(0) && !inMenu)
                         {
                             Cursor.lockState = CursorLockMode.Locked;
                             Cursor.lockState = CursorLockMode.None;
                             isLooking = true;
                             inMenu = true;
-                            itemPrefab = Instantiate(item, new Vector3 (100, 100, 103), Quaternion.identity);
+                            itemPrefab = Instantiate(item, new Vector3 (100, 100, 100.5f), Quaternion.identity);
 
                             infoPanel.gameObject.SetActive(true);
                             infoPanel.DOFade(1f, 0.2f);
